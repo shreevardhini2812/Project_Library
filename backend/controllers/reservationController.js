@@ -1,5 +1,5 @@
 import Reservation from "../models/Reservation.js";
-import { sendEmail } from "../utils/sendEmail.js";
+import { sendemail } from "../utils/sendemail.js";
 import Book from "../models/Book.js";
 
 
@@ -36,7 +36,7 @@ export const notifyReservation = async () => {
     for (let r of reservations) {
       if (r.book.availableCopies > 0) {
         // Send email to user
-        await sendEmail({
+        await sendemail({
           to: r.user.email,
           subject: "Book Available",
           text: `The book "${r.book.title}" you reserved is now available. Please borrow it soon!`
