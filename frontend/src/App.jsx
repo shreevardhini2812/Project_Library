@@ -21,6 +21,7 @@ export default function App() {
 
   return (
     <Routes>
+      {/* <Route path="/register" element={<Register />}/> */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
