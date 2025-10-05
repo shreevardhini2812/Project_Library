@@ -27,9 +27,6 @@ export default function App() {
 
       <Route path="/" element={token ? <Navigate to={user?.role === "admin" ? "/admin" : "/dashboard"} /> : <Navigate to="/login" />} />
 
-      
-
-
       <Route path="/books" element={<Books/>}/>
       <Route path="/book/:id" element={<BookDetails/>}/>
       <Route path="/my-reviews" element={<MyReviews/>}/>
