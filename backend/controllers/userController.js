@@ -1,4 +1,4 @@
-// backend/controllers/userController.js
+
 import User from "../models/User.js";
 import Book from "../models/Book.js";
 
@@ -11,7 +11,7 @@ export const addBrowsingHistory = async (req, res) => {
     if (!book) return res.status(404).json({ message: "Book not found" });
 
     const user = await User.findById(req.user._id);
-    // remove existing if exists
+   
     user.browsingHistory = (user.browsingHistory || []).filter(e => e.book.toString() !== bookId);
     user.browsingHistory.unshift({ book: bookId, viewedAt: new Date() });
     if (user.browsingHistory.length > 50) user.browsingHistory = user.browsingHistory.slice(0, 50);

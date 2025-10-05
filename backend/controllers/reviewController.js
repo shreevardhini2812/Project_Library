@@ -1,7 +1,7 @@
 import Review from "../models/Review.js";
 import Book from "../models/Book.js";
 
-// User submits review (pending)
+
 export const submitReview = async (req, res) => {
   try {
     const { rating = 5, comment } = req.body;
@@ -25,7 +25,6 @@ export const submitReview = async (req, res) => {
   }
 };
 
-// Get my reviews
 export const getMyReviews = async (req, res) => {
   try {
     const reviews = await Review.find({ user: req.user._id }).populate("book", "title author");
@@ -36,7 +35,6 @@ export const getMyReviews = async (req, res) => {
   }
 };
 
-// Admin - get all reviews
 export const getAllReviews = async (req, res) => {
   try {
     const reviews = await Review.find().populate("book user").sort({ createdAt: -1 });
@@ -47,7 +45,7 @@ export const getAllReviews = async (req, res) => {
   }
 };
 
-// Admin approve review
+
 export const approveReview = async (req, res) => {
   try {
     const { id } = req.params;
@@ -62,8 +60,7 @@ export const approveReview = async (req, res) => {
   }
 };
 
-// Admin delete review
-// Delete a review (admin only)
+
 export const deleteReview = async (req, res) => {
   try {
     const review = await Review.findById(req.params.id);
@@ -77,7 +74,7 @@ export const deleteReview = async (req, res) => {
 };
 
 
-// Public - get approved reviews for a book
+
 export const getApprovedReviewsForBook = async (req, res) => {
   try {
     const { bookId } = req.params;

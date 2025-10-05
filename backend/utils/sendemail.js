@@ -1,8 +1,8 @@
-// backend/utils/sendEmail.js
+
 import nodemailer from "nodemailer";
 
 export const sendemail = async ({ to, subject, text, html }) => {
-  // If env settings not provided, we just log (safe fallback)
+  
   if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS || !process.env.EMAIL_HOST) {
     console.log("Mock sendEmail =>", { to, subject, text });
     return;

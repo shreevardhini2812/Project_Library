@@ -4,7 +4,7 @@ import { authMiddleware, user } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// Dummy payment route
+
 router.post("/pay-fine", authMiddleware, user, payFine);
 
 export default router;

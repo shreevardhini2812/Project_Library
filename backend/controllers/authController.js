@@ -44,7 +44,7 @@ export const login = async (req, res) => {
 };
 
 export const profile = async (req, res) => {
-  // authMiddleware already populated req.user
+ 
   if (!req.user) return res.status(401).json({ message: "Not authorized" });
   res.json({ user: req.user });
 };
@@ -73,7 +73,7 @@ export const updatePassword = async (req, res) => {
   }
 };
 
-// Get logged-in user
+
 export const getMe = async (req, res) => {
   if (!req.user) return res.status(401).json({ message: "Not authorized" });
   res.json({ id: req.user._id, name: req.user.name, email: req.user.email, role: req.user.role });

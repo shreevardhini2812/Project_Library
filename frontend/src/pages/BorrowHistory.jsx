@@ -45,7 +45,7 @@ export default function BorrowHistory() {
       try {
         await api.put(`/borrows/${h._id}/pay-fine`);
         alert("Fine paid successfully");
-        setHistory(); // refresh list
+        setHistory();
       } catch (err) {
         alert("Payment failed",err);
       }

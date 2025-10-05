@@ -17,7 +17,7 @@ export default function BorrowedBooks() {
     try {
       await api.post("/payments/pay-fine", { borrowId });
       alert("Fine paid successfully!");
-      fetchBorrows(); // refresh list
+      fetchBorrows();
     } catch (err) {
       alert(err.response?.data?.message || "Failed to pay fine");
     }

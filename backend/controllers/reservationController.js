@@ -10,14 +10,14 @@ export const createReservation = async (req, res) => {
     const book = await Book.findById(bookId);
     if (!book) return res.status(404).json({ message: "Book not found" });
 
-    // Check if user already reserved this book
+   
     const existing = await Reservation.findOne({ user: req.user._id, book: bookId, status: "pending", });
     if (existing) return res.status(400).json({ message: "Already reserved" });
 
     const reservation = new Reservation({
       user: req.user._id,
       book: bookId,
-      notified: book.availableCopies > 0, // notify immediately if available
+      notified: book.availableCopies > 0,
       status: "pending",
     });
 
@@ -30,19 +30,19 @@ export const createReservation = async (req, res) => {
 };
 export const notifyReservation = async () => {
   try {
-    // Find reservations not yet notified
+    
     const reservations = await Reservation.find({ notified: false }).populate("user book");
 
     for (let r of reservations) {
       if (r.book.availableCopies > 0) {
-        // Send email to user
+        
         await sendemail({
           to: r.user.email,
           subject: "Book Available",
           text: `The book "${r.book.title}" you reserved is now available. Please borrow it soon!`
         });
 
-        // Mark reservation as notified
+        
         r.notified = true;
         await r.save();
       }

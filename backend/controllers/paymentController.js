@@ -1,6 +1,5 @@
 import Borrow from "../models/Borrow.js";
 
-// Dummy fine payment
 export const payFine = async (req, res) => {
   try {
     const { borrowId } = req.body;
@@ -10,7 +9,6 @@ export const payFine = async (req, res) => {
     if (borrow.fineAmount <= 0) return res.status(400).json({ message: "No fine to pay" });
     if (borrow.finePaid) return res.status(400).json({ message: "Fine already paid" });
 
-    // Simulate payment success
     borrow.finePaid = true;
     await borrow.save();
 

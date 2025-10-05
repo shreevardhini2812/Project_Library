@@ -16,7 +16,7 @@ borrowSchema.virtual("fine").get(function () {
     const daysOverdue = Math.ceil(
       (today - this.dueDate) / (1000 * 60 * 60 * 24)
     );
-    return daysOverdue * 10; // fine = 10 per day
+    return daysOverdue * 10;
   }
   return 0;
 });

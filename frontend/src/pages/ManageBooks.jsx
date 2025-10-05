@@ -13,7 +13,7 @@ export default function ManageBooks() {
     copies: 1,
   });
 
-  // Fetch books
+  
   const fetchBooks = async () => {
     try {
       const res = await api.get("/books");
@@ -27,7 +27,7 @@ export default function ManageBooks() {
     fetchBooks();
   }, []);
 
-  // Add new book
+  
   const addBook = async () => {
     try {
       await api.post("/books", newBook);
@@ -39,7 +39,7 @@ export default function ManageBooks() {
     }
   };
 
-  // Delete book
+  
   const deleteBook = async (id) => {
     if (!window.confirm("Delete this book?")) return;
     try {
@@ -55,7 +55,7 @@ export default function ManageBooks() {
       <AdminNavbar/>
       <h2 className="text-xl font-bold mb-4">Manage Books</h2>
 
-      {/* Add Book Form */}
+      
       <div className="mb-6 border p-4 rounded bg-gray-100">
         <h3 className="font-semibold mb-2">Add New Book</h3>
         <input
@@ -79,13 +79,7 @@ export default function ManageBooks() {
           onChange={(e) => setNewBook({ ...newBook, genre: e.target.value })}
           className="border p-2 mr-2"
         />
-        {/* <input
-          type="number"
-          placeholder="Year"
-          value={newBook.year}
-          onChange={(e) => setNewBook({ ...newBook, year: e.target.value })}
-          className="border p-2 mr-2"
-        /> */}
+        
         <input
           type="number"
           placeholder="Copies"
@@ -104,7 +98,7 @@ export default function ManageBooks() {
         </button>
       </div>
 
-      {/* Books List */}
+     
       <h3 className="text-xl font-bold mb-4">Existing Books</h3>
       <table className="w-full border">
         <thead>

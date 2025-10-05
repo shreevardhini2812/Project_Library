@@ -2,7 +2,7 @@ import Borrow from "../models/Borrow.js";
 import Book from "../models/Book.js";
 import Reservation from "../models/Reservation.js";
 
-// User borrows a book
+
 export const borrowBook = async (req, res) => {
   try {
     const { bookId } = req.params;
@@ -10,11 +10,11 @@ export const borrowBook = async (req, res) => {
     if (!book) return res.status(404).json({ message: "Book not found" });
     if (book.availableCopies <= 0) return res.status(400).json({ message: "No copies available" });
 
-    // Optional: enforce borrow limits per user here
+
 
     const borrowDate = new Date();
     const dueDate = new Date();
-    dueDate.setDate(borrowDate.getDate() + 1); // 7 days borrow period
+    dueDate.setDate(borrowDate.getDate() + 7); 
 
     const borrow = await Borrow.create({
       user: req.user._id,
@@ -32,7 +32,7 @@ export const borrowBook = async (req, res) => {
     book.availableCopies -= 1;
     await book.save();
 
-    // If user had a pending reservation for this book, mark it completed
+    
     await Reservation.findOneAndUpdate({ book: book._id, user: req.user._id, status: "pending" }, { status: "completed" });
 
     res.status(201).json(borrow);
@@ -42,36 +42,36 @@ export const borrowBook = async (req, res) => {
   }
 };
 
-// User returns book
+
 export const returnBook = async (req, res) => {
   try {
     const borrowId = req.params.id;
 
-    // Find the borrow record
+   
     const borrow = await Borrow.findById(borrowId).populate("book");
     if (!borrow) return res.status(404).json({ message: "Borrow record not found" });
 
     if (borrow.status !== "borrowed")
       return res.status(400).json({ message: "Book already returned or invalid status" });
 
-    // Update borrow status
+   
     borrow.status = "returned";
 
-    // Calculate fine if overdue
+   
     const today = new Date();
     if (borrow.dueDate < today) {
       const diffDays = Math.ceil((today - borrow.dueDate) / (1000 * 60 * 60 * 24));
-      borrow.fineAmount = diffDays * 10; // ₹10 per day, adjust as needed
+      borrow.fineAmount = diffDays * 10;
     }
 
     await borrow.save();
 
-    // Increment book available copies
+   
     const book = await Book.findById(borrow.book._id);
     book.availableCopies += 1;
     await book.save();
 
-    // Mark reservation as completed if exists
+  
     await Reservation.findOneAndUpdate(
       { user: borrow.user, book: book._id, status: "pending" },
       { status: "completed" }
@@ -84,7 +84,6 @@ export const returnBook = async (req, res) => {
   }
 };
 
-// Get user's borrow history
 export const userHistory = async (req, res) => {
   try {
     const history = await Borrow.find({ user: req.user._id }).populate("book").sort({ borrowDate: -1 });
@@ -95,7 +94,7 @@ export const userHistory = async (req, res) => {
   }
 };
 
-// Admin - get all borrow history
+
 export const allHistory = async (req, res) => {
   try {
     const history = await Borrow.find().populate("book user").sort({ borrowDate: -1 });
@@ -112,10 +111,10 @@ export const scheduleOverdueNotification = async () => {
   for (let b of borrows) {
     b.status = "overdue";
     const overdueDays = Math.ceil((new Date() - b.dueDate) / (1000*60*60*24));
-    b.fineAmount = overdueDays * 10; // Example fine
+    b.fineAmount = overdueDays * 10; 
     await b.save();
 
-    // Send email reminder
+    
     await sendemail({
       to: b.user.email,
       subject: "Overdue Book Reminder",
@@ -145,13 +144,13 @@ export const getUserBorrows = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch borrow history" });
   }
 };
-// Mark fine as paid (dummy payment)
+
 export const payFine = async (req, res) => {
   try {
     const borrow = await Borrow.findById(req.params.id);
     if (!borrow) return res.status(404).json({ message: "Borrow not found" });
 
-    borrow.finePaid = true; // add this field dynamically
+    borrow.finePaid = true;
     await borrow.save();
 
     res.json({ message: "Fine paid successfully", borrow });

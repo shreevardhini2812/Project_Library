@@ -18,7 +18,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Routes
+
 app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);
 app.use("/api/reservations", reservationRoutes);
@@ -26,11 +26,10 @@ app.use("/api/borrow", borrowRoutes);
 app.use("/api/reviews", reviewRoutes);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-// Run once at startup
+
 scheduleOverdueNotification();
 
-// Run every 24 hours
 setInterval(scheduleOverdueNotification, 1000 * 60 * 60 * 24);
 setInterval(notifyReservation, 1000 * 60 * 60);

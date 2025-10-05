@@ -1,6 +1,6 @@
 import Book from "../models/Book.js";
 
-// Admin - add book
+
 export const addBook = async (req, res) => {
   try {
     const { title, author, genre, year, copies = 1 } = req.body;
@@ -22,7 +22,6 @@ export const addBook = async (req, res) => {
   }
 };
 
-// Public - get all books
 export const getBooks = async (req, res) => {
   try {
     const { title, author, genre } = req.query;

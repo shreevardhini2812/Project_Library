@@ -21,17 +21,13 @@ export default function App() {
 
   return (
     <Routes>
-      {/* <Route path="/register" element={<Register />}/> */}
+     
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
       <Route path="/" element={token ? <Navigate to={user?.role === "admin" ? "/admin" : "/dashboard"} /> : <Navigate to="/login" />} />
 
-      {/* <Route path="/dashboard" element={token && user?.role === "user" ? <Dashboard /> : <Navigate to="/login" />} /> */}
-      {/* <Route path="/books" element={token && user?.role === "user" ? <Books /> : <Navigate to="/login" />} />
-      <Route path="/book/:id" element={token ? <BookDetails /> : <Navigate to="/login" />} />
-      <Route path="/my-reviews" element={token && user?.role === "user" ? <MyReviews /> : <Navigate to="/login" />} />
-      <Route path="/borrow/history" element={token && user?.role === "user" ? <BorrowHistory /> : <Navigate to="/login" />} /> */}
+      
 
 
       <Route path="/books" element={<Books/>}/>
@@ -39,13 +35,10 @@ export default function App() {
       <Route path="/my-reviews" element={<MyReviews/>}/>
       <Route path="/borrow/history" element={<BorrowHistory/>}/>
 
-      {/* <Route path="/admin" element={token && user?.role === "admin" ? <ManageReviews /> : <Navigate to="/login" />} /> */}
-        {/* Admin Dashboard */}
+      
         <Route path="/admin" element={<AdminNavbar />} />
         <Route path="/dashboard" element={<Dashboard/>}/>
-      {/* <Route path="/admin/manage-reviews" element={token && user?.role === "admin" ? <ManageReviews /> : <Navigate to="/admin" />} /> */}
       <Route path="/admin/borrow-history" element={token && user?.role === "admin" ? <BorrowHistory /> : <Navigate to="/admin" />} />
-      {/* <Route path="/admin/profile" element={token && user?.role === "admin" ? <Profile /> : <Navigate to="/login" />} /> */}
 
 
       <Route path="/admin/manage-reviews" element={<ManageReviews/>}/>

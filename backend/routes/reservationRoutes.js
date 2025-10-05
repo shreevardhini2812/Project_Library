@@ -7,5 +7,4 @@ const router = express.Router();
 router.post("/", authMiddleware, user, createReservation);
 router.post("/", authMiddleware, user, notifyReservation);
 
-// no admin routes here in minimal implementation
 export default router;
