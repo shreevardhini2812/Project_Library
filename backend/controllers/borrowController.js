@@ -115,7 +115,7 @@ export const scheduleOverdueNotification = async () => {
     await b.save();
 
     
-    await sendemail({
+    await sendEmail({
       to: b.user.email,
       subject: "Overdue Book Reminder",
       text: `Your book "${b.book.title}" is overdue by ${overdueDays} day(s). Fine: ₹${b.fineAmount}`

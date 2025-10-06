@@ -25,6 +25,25 @@ export default function BorrowHistory() {
     }
   };
 
+  const payRup = async (borrowId, amount) => {
+  try {
+    const token = sessionStorage.getItem("token");
+    const { data } = await api.post(
+      "/payments/create",
+      { borrowId , amount},
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    alert(`${data.message}! Transaction ID: ${data.transactionId}`);
+    setHistory(prev=>prev.map(h=>h._id===borrowId?data.borrow:h));
+  } catch (err) {
+    console.error(err);
+    alert("Payment failed. Try again.");
+  }
+};
+
+  
+
+
   return (
     <div>
       <UserNavbar />
@@ -37,22 +56,15 @@ export default function BorrowHistory() {
               <p>Borrowed: {new Date(h.borrowDate || h.createdAt).toLocaleString()}</p>
               <p>Due: {h.dueDate ? new Date(h.dueDate).toLocaleDateString() : "—"}</p>
               <p>Status: {h.status}</p>
-              {h.status === "borrowed" && <button onClick={()=>handleReturn(h._id)} className="bg-sky-900 p-2 w-20 cursor-pointer text-white hover:bg-gray-400 hover:text-black">Return</button>}
+              {h.status === "borrowed" && <button onClick={()=>handleReturn(h._id, h.fine)} className="bg-sky-900 p-2 w-20 cursor-pointer text-white hover:bg-gray-400 hover:text-black">Return</button>}
               {h.fine > 0 && <p>Fine: ₹{h.fine}</p>}
               {h.fine > 0 && !h.finePaid && (
-  <button
-    onClick={async () => {
-      try {
-        await api.put(`/borrows/${h._id}/pay-fine`);
-        alert("Fine paid successfully");
-        setHistory();
-      } catch (err) {
-        alert("Payment failed",err);
-      }
-    }}
-  >
+  
+  <button className="bg-sky-900 p-2 cursor-pointer text-white hover:bg-gray-400 hover:text-black" onClick={() => payRup(h._id,h.fine)}>
     Pay Fine ₹{h.fine}
   </button>
+
+  
 )}
 {h.fine > 0 && h.finePaid && <p style={{ color: "green" }}>Fine Paid</p>}
 

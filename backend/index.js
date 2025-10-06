@@ -10,6 +10,7 @@ import borrowRoutes from "./routes/borrowRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 import { scheduleOverdueNotification } from "./controllers/borrowController.js";
 import { notifyReservation } from "./controllers/reservationController.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -24,6 +25,8 @@ app.use("/api/books", bookRoutes);
 app.use("/api/reservations", reservationRoutes);
 app.use("/api/borrow", borrowRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/payments",paymentRoutes);
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
