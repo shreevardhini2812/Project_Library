@@ -40,6 +40,10 @@ export default function Login() {
       <div className="p-5">
       <span className="text-white p-12">Not Registered ? click </span><Link to="/register" className="text-white">Register</Link>
     </div>
+    <div className="text-white border p-2">
+    <p>To login as Admin email: admin@gmail.com password: admin12345</p>
+    <p>To login as User email: vvv@gmail.com password: vvv</p>
+    </div>
     </div>
   );
 }
