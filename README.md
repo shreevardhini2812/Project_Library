@@ -7,3 +7,7 @@ FUNCTIONALITIES:
 5) User - Can borrow book, Reserve unavailable book, Return book, Can give review, Can automatically calculate fine for overdue books and can make dummy payment integration.
 6) The fine is rupees 10 for one day.
 7) Send email notifications for overdue books or availability
+   
+ADMIN CREDENTIALS:
+Email id: admin@gmail.com
+Password: admin12345
